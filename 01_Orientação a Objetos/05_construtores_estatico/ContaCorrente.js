@@ -1,9 +1,10 @@
 import { Cliente } from "./Cliente.js";
+
 export class ContaCorrente {
     agencia;
-    static numeroDeContas = 0;
     _cliente;
-    _saldo = 0; 
+    // #saldo =0 https://github.com/tc39/proposal-class-fields#private-fields
+    _saldo = 0; //convenções atuais, ele não deve ser alterado fora da classe, mas o JS não impede de usa-lo
 
     set cliente(novoValor) {
         if (novoValor instanceof Cliente) {
@@ -22,7 +23,6 @@ export class ContaCorrente {
     constructor(agencia, cliente) {
         this.agencia = agencia;
         this.cliente = cliente;
-        ContaCorrente.numeroDeContas +=1;
     }
     
     sacar(valor) {
@@ -38,12 +38,11 @@ export class ContaCorrente {
         }
         this._saldo += valor;
     }
-
+    //composição de classes (conta é um objeto da classe ContaCorrente)
     transferir(valor, conta) {
         const valorSacado = this.sacar(valor);
         conta.depositar(valorSacado);
+        valor = 20; //parametro valor é uma cópia, logo valor no index não será alterado
+        // conta.cidade = "Salvador" CUIDADO, irá alterá, pois conta é um tipo de referência
     }
 }
-
-
-//atributo é especifico daquela instancia, se vc faz um atributo numeroDeContas = 0, e depois colocar no construtor (this.numeroDeContas +=1;) cada conta terá esse numero igual 1, por isso usa o static
