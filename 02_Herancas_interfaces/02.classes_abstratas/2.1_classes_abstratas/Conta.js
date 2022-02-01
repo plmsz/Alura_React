@@ -1,9 +1,7 @@
 export class Conta {
   constructor(saldoInicial, cliente, agencia) {
-    if (this.constructor == Conta) {
-      throw new Error(
-        "Você não deve instanciar um objeto tipo Conta, pois essa é uma classe abstrata."
-      );
+    if(this.constructor == Conta){
+      throw new Error("Você não deve instanciar um objeto tipo Conta, pois essa é uma classe abstrata.");
     }
     this._saldo = saldoInicial;
     this._cliente = cliente;
@@ -23,12 +21,12 @@ export class Conta {
   get saldo() {
     return this._saldo;
   }
-  // temos o método abstrato, que se alguma classe filha da classe Conta esquecer de sobrescrever esse método, na hora que for chamado ele vai receber um erro
-  //Métodos Abstratos servem para que sempre que uma classe filha herde de uma classe pai, ela seja obrigada a sobrescrever o método original da classe pai.
-  sacar(valor) {
-    throw new Error("O método sacar da conta abstrato");
-  }
 
+  sacar(valor) {
+    let taxa = 1;
+    return this._sacar(valor, taxa);
+  }
+ 
   _sacar(valor, taxa) {
     const valorSacado = taxa * valor;
     if (this._saldo >= valorSacado) {
