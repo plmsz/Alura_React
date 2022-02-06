@@ -61,4 +61,32 @@ background-image: url(../img/icone-relogio.png);
   <a href="url" accesskey="l" title="Descrição usando o atributo title"> Descrição escrita no corpo do documento </a>
 </code>
 
-Note que no exemplo acima, usamos o atributo (accesskey="l"), onde fará com que este link receba o foco quando o usuário ao navegar por esta página, pressionar simultaneamente as teclas (alt+l).
+  - Note que no exemplo acima, usamos o atributo (accesskey="l"), onde fará com que este link receba o foco quando o usuário ao navegar por esta página, pressionar simultaneamente as teclas (alt+l).
+
+- Dispositivos com tela=> screen and, para impressão => print and 
+- min-width: a partir de 610px fica laranja tomate 
+
+<code>
+@media screen and (min-width: 610px) {
+    .chamada{
+        background-color: tomato;
+    }
+}
+
+@media print and (min-width: 610px) {
+    .chamada{
+        background-color: tomato;
+    }
+}
+</code>
+
+<code>
+@media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ }
+@media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
+@media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
+@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+@media (min-width:1281px) { /* hi-res laptops and desktops */ }
+</code>
+
+https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
