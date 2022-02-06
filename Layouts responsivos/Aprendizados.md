@@ -36,11 +36,10 @@ border: 1px solid var(--branco);
 
 - Atrivuito title na tag anchor:
 
+- Arquivo de reset.css antes dos arquivos "normais" de css
 ---
 
-# Interessante
-
-- Arquivo de reset.css antes dos arquivos "normais" de css
+# Novo
 
 - Se uma imagem não tem importância de conteúdo, essa imagem pode ser removida completamente do HTML, ela vai para o CSS. Ex:
 
@@ -90,3 +89,11 @@ background-image: url(../img/icone-relogio.png);
 </code>
 
 https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
+
+- Manter o container de uma página em um determinado tamanho, usa calc em ambos paddings, no ex o container sempre pcupa 940px
+<code>
+  .container {
+      padding-left: calc((100% - 940px)/2);
+      padding-right: calc((100% - 940px)/2);
+  }
+</code>
