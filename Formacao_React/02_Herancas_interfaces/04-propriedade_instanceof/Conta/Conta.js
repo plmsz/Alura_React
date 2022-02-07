@@ -26,7 +26,7 @@ export class Conta {
   // temos o método abstrato, que se alguma classe filha da classe Conta esquecer de sobrescrever esse método, na hora que for chamado ele vai receber um erro
   //Métodos Abstratos servem para que sempre que uma classe filha herde de uma classe pai, ela seja obrigada a sobrescrever o método original da classe pai.
   sacar(valor) {
-    throw new Error("O método sacar da conta abstrato");
+    throw new Error("O método sacar da conta é abstrato");
   }
 
   _sacar(valor, taxa) {

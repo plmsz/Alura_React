@@ -1,1 +1,1 @@
-Implementar diferentes tipos de conta: empresarial, conjunta, salarial
+Implementar diferentes tipos de conta: empresarial, conjunta

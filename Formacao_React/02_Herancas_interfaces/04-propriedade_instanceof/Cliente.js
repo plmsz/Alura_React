@@ -8,4 +8,6 @@ export class Cliente {
 		this._cpf = cpf;
 		this._senha = senha;
 	}
+
+
 }
