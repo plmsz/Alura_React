@@ -4,12 +4,25 @@ import FormularioCadastro from "./components/FormularioCadastro";
 import React, { Component } from 'react';
 
 class App extends Component {
-	state = {  } 
+	constructor(){
+		super()
+		//State chama o render
+		this.state =  {
+			notas: []
+		}
+	}
+	criarNota(titulo,texto){
+		const novaNota = {titulo, texto}
+		this.notas.push({novaNota})
+		this.setState({
+			notas: this.notas
+		})
+	}
 	render() { 
 		return (
 			<section className="conteudo">
-				<FormularioCadastro />
-				<ListaDeNotas />
+				<FormularioCadastro criarNota={this.criarNota.bind(this)}/>
+				<ListaDeNotas notas={this.state.notas}/>
 			</section>
 		);
 	}
