@@ -3,7 +3,7 @@
 - Por que não pode usar for/forEach no jsx?
 - map (item, index)
 - stopPropagation
--arrow function super
+- arrow function super
 ---
 
 # Novo
