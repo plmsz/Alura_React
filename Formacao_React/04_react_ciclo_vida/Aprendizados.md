@@ -37,3 +37,9 @@ class Exampls extends Component {
   }
 }
 <code>
+
+Ideias:
+Filtrar por categoria
+Adicionar data
+Ordenar por data
+Persistencia
