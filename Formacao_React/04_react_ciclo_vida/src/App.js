@@ -2,7 +2,7 @@ import "./assets/App.css"
 import ListaDeNotas from "./components/ListaDeNotas";
 import FormularioCadastro from "./components/FormularioCadastro";
 import React, { Component } from 'react';
-import ListaDeCategorias from './components/ListaDeCategorias/';
+import ListaDeCategorias from './components/ListaDeCategorias';
 
 class App extends Component {
 	//app é um statefull componente, componentes que recebem informações e lidam com a gestão dessas informações 
