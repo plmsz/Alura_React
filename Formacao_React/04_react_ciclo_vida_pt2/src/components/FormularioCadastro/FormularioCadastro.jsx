@@ -1,16 +1,30 @@
 import React, { Component } from "react";
 import "./estilo.css";
+
 // Usa o super pois estende o Componente do react
 class FormularioCadastro extends Component {
   constructor(props) {
     super(props);
     this.titulo = "";
     this.texto = "";
-    this.categoria= "sem categoria"
+    this.categoria = "sem categoria";
+    this.state = { categorias: [] };
+    this._novasCategorias = this._novasCategorias.bind(this)
+    //bind  recebe uma função como parâmetro e devolve uma nova função como parâmetro, esse bind que estou fazendo aqui porque tenho uma única referência para essa função 
+  }
+  componentDidMount() {
+    this.props.categorias.inscrever(this._novasCategorias);
+  }
+  
+  componentWillUnmount(){
+    this.props.categorias.desinscrever(this._novasCategorias);
+  }
+
+  _novasCategorias(categorias) {
+    this.setState({ ...this.state, categorias });
   }
 
   _handlerMudancaTitulo(evento) {
-    //this é dinâmico, dentro do contexto do evento ele é indefinido, o evento executa o método precisa ser associado ao this com o a própria instancia criada
     evento.stopPropagation();
     this.titulo = evento.target.value;
   }
@@ -37,8 +51,8 @@ class FormularioCadastro extends Component {
           onChange={this._handlerMudancaCategoria.bind(this)}
         >
           <option>Sem categoria</option>
-          {this.props.categorias.map((categoria) => {
-            return <option>{categoria}</option>;
+          {this.state.categorias.map((categoria, index) => {
+            return <option key={index}>{categoria}</option>;
           })}
         </select>
         <input
