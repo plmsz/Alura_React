@@ -15,7 +15,8 @@ function App() {
 }
 
 function aoEnviarForm(dados) {
-  alert(Object.values(dados))
+  // alert(Object.values(dados))
+  console.log(dados)
 }
 
 function CPFvalido(cpf) {
