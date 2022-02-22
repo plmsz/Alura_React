@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 import { Button, TextField, Switch, FormControlLabel } from "@material-ui/core";
 
-function DadosPessoais({aoEnviar, validarCPF}) {
+function DadosPessoais({ aoEnviar, validacoes }) {
   //Regra para hooks: não posso ter, dentro de uma lógica condicional, e ele tem que estar sempre dentro de um componente do react.
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(false);
-  const [erros, setErros] = useState({cpf:{valido:true, texto:""}})
+  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" } });
+
+  function validarCampos(event) {
+    const { name, value } = event.target;
+    const ehValido = validacoes[name](value);
+    const novoEstado = { ...erros };
+    novoEstado[name] = validacoes[name](value);
+    setErros(novoEstado);
+  }
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        aoEnviar({nome, sobrenome, cpf, promocoes, novidades})
+        aoEnviar({ nome, sobrenome, cpf, promocoes, novidades });
       }}
     >
       <TextField
@@ -43,19 +51,17 @@ function DadosPessoais({aoEnviar, validarCPF}) {
       {/* Quando se retira o foco do elemento => onBlur */}
       <TextField
         id="CPF"
+        name="cpf"
         label="CPF"
         variant="outlined"
         fullWidth
         margin="normal"
         error={!erros.cpf.valido}
         helperText={erros.cpf.texto}
-        onChange={(event)=> {
-            setCpf(event.target.value.replace(/[^\d]+/g, ''));
+        onChange={(event) => {
+          setCpf(event.target.value.replace(/[^\d]+/g, ""));
         }}
-        onBlur={(event) => {
-            const ehValido = validarCPF(cpf)
-            setErros(ehValido)
-        }}
+        onBlur={validarCampos}
         required
       />
       <FormControlLabel
