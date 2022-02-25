@@ -49,7 +49,7 @@ const cliente2 = {
 	fones: ["7532195687,75986548756"],
 };
 
-cliente2.fones.forEach(fone => console.log(fone))
+cliente2.fones.forEach(fone => console.log(fone));
 
 cliente2.dependentes = [
 	{
@@ -63,9 +63,9 @@ cliente2.dependentes = [
 		dataNascimento: "2030/06/27",
 	},
 ];
-console.log(cliente2)
+console.log(cliente2);
 
-cliente2.dependentes[0].nome ="Benjamin Jones-Parker"
+cliente2.dependentes[0].nome = "Benjamin Jones-Parker";
 console.log(cliente2);
 
 cliente2.dependentes.push({
@@ -74,7 +74,7 @@ cliente2.dependentes.push({
 	dataNascimento: "2027/06/12",
 });
 
-console.log(cliente2)
+console.log(cliente2);
 //Ordena os objetos em ordem decrescente pela propriedade dataNascimento
-const filhoMaisNovo = cliente2.dependentes.sort((b,a)=> a.dataNascimento.localeCompare(b.dataNascimento))[0]
-console.log("Filho mais novo: ",filhoMaisNovo.nome)
+const filhoMaisNovo = cliente2.dependentes.sort((b, a) => a.dataNascimento.localeCompare(b.dataNascimento))[0];
+console.log("Filho mais novo: ", filhoMaisNovo.nome);

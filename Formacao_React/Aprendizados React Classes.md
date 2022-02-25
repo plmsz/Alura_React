@@ -25,3 +25,22 @@
 			</ul>
 		);
   </code>
+- Importando SVG como componente, se usar o create react app => svgr
+ <code>
+import { ReactComponent as SVG } from "../../assets/svg.svg";
+
+class Exampls extends Component {
+  render() {
+    return (
+          <SVG />
+		  );
+  }
+}
+<code>
+
+# Ideias:
+Filtrar por categoria
+Adicionar data
+Ordenar por data
+Persistencia
+
