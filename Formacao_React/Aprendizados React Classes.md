@@ -13,29 +13,32 @@
     -- cc (class componente)
 - Console.log no meio do return
   <code>
-  return ( 
-            <ul>
-                {console.log("hey")}
-				<div>
-					<h4>Trabalho</h4>
-				</div>
-				<li>
-					<CardNota />
-				</li>
-			</ul>
-		);
+
+    return ( 
+        <ul>
+          {console.log("hey")}
+          <div>
+            <h4>Trabalho</h4>
+          </div>
+          <li>
+            <CardNota />
+          </li>
+        </ul>
+      );
   </code>
+
 - Importando SVG como componente, se usar o create react app => svgr
  <code>
-import { ReactComponent as SVG } from "../../assets/svg.svg";
+ 
+  import { ReactComponent as SVG } from "../../assets/svg.svg";
 
-class Exampls extends Component {
-  render() {
-    return (
-          <SVG />
-		  );
+  class Exampls extends Component {
+    render() {
+      return (
+            <SVG />
+        );
+    }
   }
-}
 <code>
 
 # Ideias:
