@@ -8,6 +8,7 @@ utilizar contexto e hooks personalizados para não repetir funções
 - Navigate envia para página 404 ou:
 
 <code> 
+
     useEffect(() => {
         buscaFoto(setSrc);
         busca(`/posts/${id}`, setPost).catch(() => {
@@ -21,6 +22,7 @@ utilizar contexto e hooks personalizados para não repetir funções
 - A diferença é apenas uma / no início do path, mas isso significa MUITO. Com a barra, dizemos que queremos "resetar" nossa rota e começar do root das rotas, ou seja, de /. Já sem a barra, significa que queremos a rota relativa ao que temos agora, ou seja, se estamos em /banana, ele iria para /banana/categorias e não para /categorias, sacou?
 
 <code>
+
     <Route path="/categorias" element={<Categorias />} />
     <Route path="categorias" element={<Categorias />} />
 </code>
@@ -29,6 +31,7 @@ utilizar contexto e hooks personalizados para não repetir funções
 Depending on the user interface, you might not need an index route, but if there is any sort of persistent navigation in the parent route you'll most likely want index route to fill the space when the user hasn't clicked one of the items yet.
 
 <code>
+
     <Routes>
     <Route path="/" element={<App />}>
         <Route index element={<Home />} />
