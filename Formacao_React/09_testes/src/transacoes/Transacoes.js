@@ -28,5 +28,4 @@ Transacoes.propTypes = {
     })),
 }
 
-
 export default Transacoes;

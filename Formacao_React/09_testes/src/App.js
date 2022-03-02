@@ -17,6 +17,7 @@ export const calcularNovoSaldo = (valores, saldo) => {
 function App() {
   const [saldo, atualizarSaldo] = useState(1000);
   const [transacoes, atualizarTransacoes] = useState([]);
+  const [erro, setErro] = useState(false)
 
   async function carregarTransacoes() {
     const transacoes = await api.listaTransacoes();
@@ -27,31 +28,38 @@ function App() {
     atualizarSaldo(await api.buscaSaldo());
   }
 
-  function realizarTransacao(valores) {  
-    const novoSaldo = calcularNovoSaldo(valores, saldo);
+	async function realizarTransacao(valores) {
+	  const novoSaldo = await calcularNovoSaldo(valores, saldo);
 
-    api.atualizaSaldo(novoSaldo).catch((error) => console.error(error))
-    api.atualizaTransacoes(valores).catch((error) => console.error(error))
-    
-    atualizarSaldo(novoSaldo);
-    atualizarTransacoes([valores]);
-  }
+		if (novoSaldo < 0) {
+      setErro(true)
+      return;
+    }
 
-  useEffect(() => {
-    obterSaldo();
-    carregarTransacoes();
-  }, [saldo])
+		api.atualizaSaldo(novoSaldo).catch((error) => console.error(error));
+		api.atualizaTransacoes(valores).catch((error) => console.error(error));
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>ByteBank</h1>
-      </header>
+		atualizarSaldo(novoSaldo);
+		atualizarTransacoes([valores]);
+	}
 
-      <Conta saldo={saldo} realizarTransacao={realizarTransacao}/>
-      <Transacoes transacoes={transacoes} />
-    </div>
-  );
+	useEffect(() => {
+		obterSaldo();
+		carregarTransacoes();
+    setErro(false)
+	}, [saldo]);
+
+	return (
+		<div className="App">
+			<header className="App-header">
+				<h1>ByteBank</h1>  
+			</header>
+
+			<Conta saldo={saldo} realizarTransacao={realizarTransacao} />
+			<Transacoes transacoes={transacoes} />
+      {erro && <span>Não foi possível realiza a operação</span>}
+		</div>
+	);
 }
 
 export default App;

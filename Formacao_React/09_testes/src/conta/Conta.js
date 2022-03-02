@@ -32,6 +32,7 @@ const Conta = ({ saldo, realizarTransacao }) => {
                         onChange={handleChange}
                         data-testid="transacao"
                         checked={valores.transacao === 'deposito'}   
+                        required
                     />
                 </label>
             </div>
