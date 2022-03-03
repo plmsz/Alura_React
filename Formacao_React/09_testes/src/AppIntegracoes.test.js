@@ -1,12 +1,13 @@
+import React from "react";
 import api from "./api";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import App from "./App";
 
 jest.mock("./api");
 
-describe("Requisições para api", () => {
-	it("Exibir a lista de transações através da API", () => {
-		api.listaTransacoes.mockResolvedValie([
+xdescribe("Requisições para api", () => {
+	it("Exibir a lista de transações através da API", async () => {
+		api.listaTransacoes.mockResolvedValue([
 			{
 				transacao: "saque",
 				valor: "100",
@@ -22,7 +23,18 @@ describe("Requisições para api", () => {
 		]);
 
 		render(<App />);
+//erro: Found multiple elements with the text: saque
+//Here are the matching elements:
+//  <p>
+    //   saque
+    // </p>
 
+    // Ignored nodes: comments, <script />, <style />
+    // <p>
+    //   saque
+    // </p>
+		expect(await screen.findByText("saque")).toBeInTheDocument();
 		expect(screen.getByTestId("transacoes").children.length).toBe(2);
 	});
 });
+

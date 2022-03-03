@@ -18,8 +18,8 @@ xdescribe("Componente principal", () => {
 		});
 	});
 });
-xdescribe("Quando eu realizo uma transação", () => {
-	it("que é um saque, o valor irá diminuir", () => {
+describe("Quando eu realizo uma transação", () => {
+	xit("que é um saque, o valor irá diminuir", () => {
 		const valores = {
 			transacao: "saque",
 			valor: 100,
@@ -44,7 +44,7 @@ xdescribe("Quando eu realizo uma transação", () => {
 
 		expect(saldo.textContent).toBe("R$ 900");
 	});
-	
+
 	/* it("que é um saque, a transação é realizada", () => {
 		const { getByText, getByTestId, getByLabelText } = render(<App />);
 
@@ -63,8 +63,8 @@ xdescribe("Quando eu realizo uma transação", () => {
 	}); */
 
 	//Acrescentei a lógica de ultrapassar um valor no app
-	it("que é um saque com um valor maior que o saldo da conta", () => {
-		const { getByText, getByTestId, getByLabelText } = render(<App />)
+	xit("que é um saque com um valor maior que o saldo da conta", () => {
+		const { getByText, getByTestId, getByLabelText } = render(<App />);
 
 		const saldo = getByTestId("saldo-conta");
 		const transacao = getByLabelText("Saque");
@@ -74,7 +74,6 @@ xdescribe("Quando eu realizo uma transação", () => {
 		fireEvent.click(transacao, { target: { value: "saque" } });
 		fireEvent.change(valor, { target: { value: 1500 } });
 		fireEvent.click(botaoTransacao);
-
 
 		expect(saldo.textContent).toBe("R$ 1000");
 		// expect(
