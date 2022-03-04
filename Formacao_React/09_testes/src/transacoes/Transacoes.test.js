@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import Transacoes from "./Transacoes";
 
-xdescribe("Componente de transação do extrato", () => {
+describe("Componente de transação do extrato", () => {
 	it("O snapshot da lista de transacoes deve ser sempre o mesmo", () => {
 		const listaDeTransacoes = [
 			{ id: 1, tipo: "saque", valor: "10", data: "10/08/2020" },
