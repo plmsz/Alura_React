@@ -18,7 +18,7 @@ function App() {
 	const [saldo, atualizarSaldo] = useState(1000);
 	const [transacoes, atualizarTransacoes] = useState([]);
 	const [erro, setErro] = useState(false);
-
+	
 	async function carregarTransacoes() {
 		const transacoes = await api.listaTransacoes();
 		atualizarTransacoes(transacoes);
@@ -30,14 +30,16 @@ function App() {
 
 	async function realizarTransacao(valores) {
 		const novoSaldo = await calcularNovoSaldo(valores, saldo);
-console.log(novoSaldo)
+
 		if (novoSaldo < 0) {
 			setErro(true);
+			console.log(novoSaldo)
 			return;
 		}
 
 		api.atualizaSaldo(novoSaldo).catch((error) => console.error(error));
 		api.atualizaTransacoes(valores).catch((error) => console.error(error));
+
 
 		atualizarSaldo(novoSaldo);
 		atualizarTransacoes([valores]);
@@ -57,7 +59,7 @@ console.log(novoSaldo)
 
 			<Conta saldo={saldo} realizarTransacao={realizarTransacao} />
 			<Transacoes transacoes={transacoes} />
-			{erro && <span>Não foi possível realiza a operação</span>}
+			 {erro && <span>Não foi possível realizar a operação</span>} 
 		</div>
 	);
 }
