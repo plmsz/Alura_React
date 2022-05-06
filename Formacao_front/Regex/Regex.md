@@ -2,6 +2,8 @@
 - Encontrar todas as divs com qualquer contéudo
 <div .*>
 
+#Regex library
+https://regex101.com/library?orderBy=MOST_RECENT&search=
 
 # meta caracteres
 
@@ -64,7 +66,8 @@ Cada grupo pode ter de um a três algarismos.
 
 \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
 
-https://cursos.alura.com.br/forum/topico-permitir-e-_-em-regex-36543
+\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b
+
 https://cursos.alura.com.br/forum/topico-pattern-para-validar-um-ip-48552
 
 ### Encontrando um cep
@@ -115,7 +118,7 @@ No <code>for</code>, o valor de <code>i</code> começa de zero e é incrementado
 [1-3]?\d\s+de\s+[A-Z][a-zç]{3,8}\s+de\s+[1-2]\d{3}
 
 [1-3]?\d "Pode existir ou não um número entre 0 e 3 (ou seja 0, 1, 2, 3) e na sequência virá qualquer outro dígito."
-[a-zç] letras minusculas incluindo o ce ce
+[a-zç] letras minusculas incluindo o ç
 21 de Maio de 1993
 11 de Abril de 1995
 28 de Dezembro de 1991
@@ -143,7 +146,8 @@ KMG-8089
 
 7\.[2-9]\s+-\s+[A-Z][a-zÀ-ú]+ (todos os acentos)
 
-7\.[2-9]\s+-\s+[^,]+ ( [^,]+ que pega qualquer dígito que não seja uma vírgula, seja ele letra ou número )  
+7\.[2-9]\s+-\s+[^,]+ 
+( [^,]+  que pega qualquer dígito que não seja uma vírgula, seja ele letra ou número )  
 
 
 ## Procurando nomes e as notas dos alunos que tiraram mais de 7.5
@@ -159,7 +163,7 @@ BALEIRO GARROTE SERROTE GOLEIRO ROTEIRO
 \w*ROT\w+  ( incorreto pois seleciona maiusculas e minusculas)
 [A-Z]*ROT[A-Z]+ (selciona maiusculas)
 
-### Carcteres "especiais" dentro de classes
+### Caracteres "especiais" dentro de classes
 A grande maioria de meta-chars são valores literais na definição da classe (dentro de []).
 Apenas os caracteres \ (barra invertida), - (hífen) e ^ (circunflexo) realmente são meta-chars dentro de uma classe.
 
@@ -192,6 +196,132 @@ bPjuygvyuzz
    (várias vezes em  uma string)
 
 ## Âncoras
-denise teste, 987.654.321.00,28 de Dezembro de 1991,(31)45562712,SCS Qd. 8 Bl. B-50,11,70333-900,Rio Grande
+Âncoras marcam uma posição específica no alvo, por isso não é possível combiná-las com um quantifier.
 
-5:18min
+\b  ( word boundary encontra o termo desde que não esteja junto a um wordchar [a-zA-Z0-9_] )
+\B  ( Non-word-boundary )
+^   ( inicio do alvo)
+$   ( fim do alvo )
+
+denise teste, 987.654.321.00,28 de Dezembro de 1991,(31)45562712,SCS Qd. 8 Bl. B-50,11,70333-900,Rio Grande
+\bde\b  ( encontra a palavra 'de')
+
+a aa aaa aaaa aa aaa_ aaa-
+\baaa\b      (encontra uma sequencia de 'aaa' e em'aaa-' )
+
+
+http://127.0.0.1:3003/Formacao_front/Regex/index.html
+
+^http.+\.html  ( inicia com http, pode ter quarlquer caractere 1 ou mais vezes e termina com .html)
+
+
+## Encontrando apenas o número do cpf
+111.111.111-11
+111.111.111-11 é o número do meu CPF
+CPF: 111.111.111-11
+
+^\d{3}.\d{3}.\d{3}-\d{2}$  (dá match apenas com a primeira linha)
+
+## Sabendo que o erro sempre começa com a expressão Caused by:, faça uma regex que capture-o.
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+^Caused by:.+
+
+## Encontrando datas
+Data: 02/09/1964
+Data:02/09/1964
+
+^Data:[\s]?[0-9]{2}/[0-9]{2}/[0-9]{4}
+
+português proporcional compor
+\Bpor\B ( a silaba por deve aparecer dentro de uma palavra, nunca no inicio ou fim )
+
+## URLs epsecíficas  
+
+Não queremos que tenha nada depois do número da resposta, e então colocamos a âncora $. A URL abaixo é aceita:
+
+https://cursos.alura.com.br/courses/expressoes-regulares2/sections/3/exercises/15179/answer/4766568
+
+Porém essa não:
+
+https://cursos.alura.com.br/courses/expressoes-regulares2/sections/3/exercises/15179/answer/4766568/aluno
+
+(.*/exercises/\d+/answer/\d+)$
+
+# Grupos
+João Fulano,123.456.789-00,21 de Maio de 1993,(21) 3079-9987,Rua do Ouvidor,50,20040-030,Rio de Janeiro
+
+( )  
+## Encotrar partes da data
+([1-3]?\d)\s+de\s+([A-Z][a-zç]{3,8})\s+de\s+([1-2]\d{3})
+
+Encontra 3 grupos : 21 ||| Maio ||| 1993
+
+### Encontrar partes de uma data com exceção de grupos
+
+João Fulano,123.456.789-00,21 Maio 1993, 14 Abril 2017, (21) 3079-9987,Rua do Ouvidor,50,20040-030,Rio de Janeiro
+
+Non-capturing group (?:)
+(?:de\s+)?  (  não deve devolver o grupo formado pela preposição de e por um \s  )
+
+([1-3]?\d)\s+(?:de\s+)?([A-Z][a-zç]{3,8})\s+(?:de\s)?([1-2]\d{3})
+
+Encontra 6 grupos  21  Maio  1993 ||| 14  Abril  2017
+
+### Encontra os dígitos verificadores do cpf
+
+123.456.789-00 12345678989 123-456-789-21
+
+\d{3}[-.]?\d{3}[-.]?\d{3}[-.]?(\d{2})
+
+http://www.goulart.pro.br/cbasico/Calculo_dv.htm
+
+## Encontrar mensagem encriptografada
+
+ - Cada letra da palavra recebe o prefixo Z, mas não apenas isso. A letra Z é seguida de um número com um ou mais dígitos.
+
+Z171PZ7AZ23PZ7819AZ78GZ1AZ99IZ34O
+
+Z\d+(\w)   nossa expressão irá selecionar todos os Z seguidos de um número que é seguido de qualquer letra ou número, inclusive _. Contudo, o \w esta entre parênteses e define um grupo.
+
+Z171P ||| P | Z7A ||| A | Z23P ||| P | Z7819A ||| A | Z78G ||| G | Z1A ||| A | Z99I ||| I | Z34O ||| O
+
+## Verificar os arquivos de log para descobrir possíveis problemas no sistema.
+- Queremos usar uma Regex que possa encontrar essa linha e separar em dois grupos, Causa e Descrição para simplificar a leitura:
+
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+(Caused[\s\w:.]+):([\w\s]+)
+
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException ||| Communications link failure
+
+## Extraindo o email
+O email deve ter um @ e terminar com caelum.com.br ou alura.com.br. O nome do usuário (tudo antes do @) tem apenas letras minúsculas, pode ter um número no final e tem de 5 a 15 caracteres.
+
+Por exemplo:
+
+super.mario@caelum.com.br extrai super.mario
+donkey.kong@alura.com.br extrai donkey.kong
+bowser1@alura.com.br extrai bowser1
+
+([a-z.]{4,14}[a-z0-9]{1})@(?:alura.com.br|caelum.com.br)
+
+Solução:
+([a-z.]{4,14}[a-z\d])@(?:caelum.com.br|alura.com.br)
+
+## Validar email
+
+donkey.kong@kart.com.br
+bowser1@games.info 
+super-mario@nintendo.JP
+TEAM.donkey-kong@MARIO.kart1.nintendo.com
+
+toad@kart...com
+wario@kart@nintendo.com
+yoshi@nintendo
+daisy@nintendo.b
+..@email.com
+
+Solução : ?
