@@ -234,7 +234,7 @@ Data:02/09/1964
 ^Data:[\s]?[0-9]{2}/[0-9]{2}/[0-9]{4}
 
 português proporcional compor
-\Bpor\B ( a silaba por deve aparecer dentro de uma palavra, nunca no inicio ou fim )
+\Bpor\B (dá match com proporcional a silaba por deve aparecer dentro de uma palavra, nunca no inicio ou fim )
 
 ## URLs epsecíficas  
 
@@ -313,6 +313,13 @@ Solução:
 
 ## Validar email
 
+use os âncoras ^ e $;
+analise parte por parte:
+primeiro focando na parte local (tudo antes do @);
+depois no domínio (tudo depois do @);
+você pode repetir um grupo:
+por exemplo, (([a-z]+)\.)+ significa vários caracteres minúsculos seguido por ponto, uma ou mais vezes.
+
 donkey.kong@kart.com.br
 bowser1@games.info 
 super-mario@nintendo.JP
@@ -324,4 +331,49 @@ yoshi@nintendo
 daisy@nintendo.b
 ..@email.com
 
-Solução : ?
+Solução : 
+^([\w-]\.?)+@([\w-]+\.)+([A-Za-z]{2,4})+$
+
+a regex usa âncoras no início ^ e fim $ para garantir o match inteiro;
+antes do @, temos: ^([\w-]\.?)+
+definimos uma classe com word-chars e hífen, seguido por um ponto opcional: [\w-]\.?
+essa classe pode se repetir uma ou mais vezes, então criamos um grupo e + ao final: ([\w-]\.?)+
+depois do @, temos:
+([\w-]+\.)+, que é bastante parecido com o anterior ao @, porém com o . obrigatório,
+([A-Za-z]{2,4})+$, que é o final da nossa regex, seleciona o domínio do email, como br, com, us. O mínimo de letras dessa parte final devem ser 2 e no máximo 4.
+
+# Diferença entre o ^, $ e o \b:
+
+Suponha que temos um arquivo com várias linhas, e temos a seguinte regex ^a.*, ela só irá dar match se a linha iniciar com "a".
+
+Assim como .*a$ só irá dar match se a linha terminar com a letra "a".
+
+Agora se tivermos a regex \ba irá dar match com todas as palavras que iniciarem com a letra "a" indiferente de estar no inicio ou no final de uma linha. Assim como a\b irá casar somente palavras que terminem com "a".
+
+# Endereço
+um arquivo com diversas linhas, nas quais são necessárias as informações: Nome, Rua, Número e CEP.
+As outras informações também devem ser separadas para futuros serviços dos correios, porém não precisamos capturá-las neste momento.
+
+Nico Steppat|14/05/1977|Rua Buarque de Macedo|50|22222-222|Rio de Janeiro
+Romulo Henrique|14/06/1993|Rua do Lins|120|12345-322|Rio de Janeiro
+Leonardo Cordeiro|01/01/1995|Rua de Campo Grande|01|00001-234|Rio de Janeiro
+
+//TODO: Revisar
+
+ERRADO:
+^([A-Z][a-zà-ú]+\s[A-Z][a-zà-ú]+)|(?:[0-9]{2}\/[0-9]{2}\/[0-9]{4})|([A-Za-zÀ-ú+\s]+)|([0-9]+)|([0-9]{4}-?[0-9]{3}|)([A-Za-zÀ-ú+\s]+)
+
+CORRETO:
+^([\w\s]+)\|(?:\d\d\/\d\d\/\d\d\d\d)\|([\w\s]+)\|(\d{1,4})\|(\d{5}-\d{3})\|(?:[\w\s]{10,})$
+
+Nome era necessário capturar, então iremos criar um grupo ([\w\s]+)\|
+
+Data de nascimento não era necessário, por isso, deixaremos esse grupo como non-capturing group (?:\d\d\/\d\d\/\d\d\d\d)\|
+
+Rua Onde Mora é necessário capturar, e por isso, criamos um grupo normal: ([\w\s]+)\|
+
+Número é necessário capturar, portanto: (\d{1,4})\|
+
+CEP é necessário capturar, e podemos criar um grupo dessa maneira: (\d{5}-\d{3})\|
+
+Cidade é a nossa última análise, e não é necessária. Portanto, basta adicionarmos ?: para deixar o seu grupo não-capturável: (?:[\w\s]{10,})
