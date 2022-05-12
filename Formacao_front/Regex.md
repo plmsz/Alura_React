@@ -89,6 +89,7 @@ Pode usar {0,1} também
 
 ## Classes de char
 [0-9] ( mesma coisa de \d )
+[123] ( 1,2 ou 3)
 \d (todos os dígitos)
 [A-Z] letras de A a Z
 \s whitespace
@@ -200,6 +201,7 @@ bPjuygvyuzz
 
 \b  ( word boundary encontra o termo desde que não esteja junto a um wordchar [a-zA-Z0-9_] )
 \B  ( Non-word-boundary )
+\D  ( é um non-digit, ou seja, \D é um atalho para [^\d] )
 ^   ( inicio do alvo)
 $   ( fim do alvo )
 
@@ -249,9 +251,13 @@ https://cursos.alura.com.br/courses/expressoes-regulares2/sections/3/exercises/1
 (.*/exercises/\d+/answer/\d+)$
 
 # Grupos
+(\w+)      - grupo de word chars
+(\w+)?     - grupo opcional
+(?:\w+)?     - non-capturing group
+
 João Fulano,123.456.789-00,21 de Maio de 1993,(21) 3079-9987,Rua do Ouvidor,50,20040-030,Rio de Janeiro
 
-( )  
+ 
 ## Encotrar partes da data
 ([1-3]?\d)\s+de\s+([A-Z][a-zç]{3,8})\s+de\s+([1-2]\d{3})
 
@@ -358,13 +364,12 @@ Nico Steppat|14/05/1977|Rua Buarque de Macedo|50|22222-222|Rio de Janeiro
 Romulo Henrique|14/06/1993|Rua do Lins|120|12345-322|Rio de Janeiro
 Leonardo Cordeiro|01/01/1995|Rua de Campo Grande|01|00001-234|Rio de Janeiro
 
-//TODO: Revisar
-
-ERRADO:
-^([A-Z][a-zà-ú]+\s[A-Z][a-zà-ú]+)|(?:[0-9]{2}\/[0-9]{2}\/[0-9]{4})|([A-Za-zÀ-ú+\s]+)|([0-9]+)|([0-9]{4}-?[0-9]{3}|)([A-Za-zÀ-ú+\s]+)
 
 CORRETO:
 ^([\w\s]+)\|(?:\d\d\/\d\d\/\d\d\d\d)\|([\w\s]+)\|(\d{1,4})\|(\d{5}-\d{3})\|(?:[\w\s]{10,})$
+
+Ou:
+^([\w\s]+)\|(?:\d{2}\/\d{2}\/\d{4})\|([\w\s]+)\|(\d{1,4})\|(\d{5}-\d{3})\|(?:[\w\s]{10,})$
 
 Nome era necessário capturar, então iremos criar um grupo ([\w\s]+)\|
 
@@ -377,3 +382,103 @@ Número é necessário capturar, portanto: (\d{1,4})\|
 CEP é necessário capturar, e podemos criar um grupo dessa maneira: (\d{5}-\d{3})\|
 
 Cidade é a nossa última análise, e não é necessária. Portanto, basta adicionarmos ?: para deixar o seu grupo não-capturável: (?:[\w\s]{10,})
+
+# Expressões gancaiosas ou preguiçosas
+
+Todos os quantifiers são gananciosos por padrão. Isso significa que eles automaticamente selecionam o máximo de caracteres por padrão.
+
+Selecionando o textcontent de uma tag
+<h1 class='text-left'>Expressões Regulares</h1>
+
+<h1.+?>([\wÀ-ú\s]+)</h1>
+Retorna:  <h1 class='text-left'>Expressões Regulares</h1> ||| Expressões Regulares
+
+Repare que a regex seleciona um caractere por vez, temos 5 matches no caso do alvo alura:
+
+Gananciosa: [a-z]{1,5}  retorna alura
+Preguiçosa: [a-z]{1,5}?  retorna a | l | u | r | a
+
+#Back reference
+
+<(h1|h2).+?>([\wÀ-ú\s]+)</\1>
+
+Usa o número do grupo para referenciar no final, no exemplo abaixo não haveria match, apenas o segundo ou o exemplo acima
+<h1 class='text-left'>Expressões Regulares</h2>
+<h1[^>]+>
+
+
+## Tags que não fecham
+
+ Precisamos criar um filtro que valide essa tag de prioridade e uma das coisas que esse filtro precisará verificar é se a tag que abre é a mesma que está sendo fechada, evitando situações como: <p1> ... </p3>.
+
+<(p[1-9])>.*<\/\1>
+
+No primeiro grupo há uma tag de prioridade que pode ir de 1 até 9, por isso: <(p[1-9])>
+Podemos ter qualquer item no meio: .*
+E por último, usamos o BackReference para garantir que a tag será fechada com a mesma tag usada na abertura, escapando a barra de fechamento da tag: <\/\1>
+
+# Negação
+
+<h1 class='text-left'>Expressões Regulares</h1>
+
+<h1[^>]+>
+
+retorna  <h1 class='text-left'>
+
+## Decifrar o código - tudo que não é:
+Z171PZ7AZ23PZ7819AZ78GZ1AZ99IZ34O
+
+Antes usamos Z\d+(\w)
+
+Usando a negação: [^Z\d]
+
+retorna P | A | P | A | G | A | I | O
+
+# Regex com JS
+
+- match
+- test
+- exec
+=> replace, split
+
+## Exemplo
+
+
+<(a)\s+href="(.+)"(?:>(.*)<\/\1>)
+
+A primeira coisa, quais grupos ele seleciona? Cada parênteses representa um grupo, ou seja:
+
+(a) é o primeiro grupo.
+(.+) é o segundo grupo.
+(?:>(.*)<\/\1>) é o terceiro grupo.
+Observe ainda que dentro do terceiro temos um quarto grupo:
+
+(.*) é o quarto grupo.
+Vamos prosseguir... Quais são os grupos que essa expressão não seleciona?
+
+Os grupos não capturados são aqueles que começam com ?:, ou seja, o terceiro grupo: (?:>(.*)<\/\1>).
+
+E aí basta sabermos um exemplo de match inteiro. O que sabemos até aqui?
+
+O texto deve começar com <;
+Em seguida, devemos ter a letra a;
+Continuamos com um ou mais espaços;
+Temos, então, o texto href=";
+Após isso, um ou mais caracteres quaisquer;
+O conteúdo continuar com ".
+Como vamos entrar em uma parte mais complicada, vamos ver o que temos até aqui, de fato:
+
+<a href="www.google.com.br"
+
+Agora vem a parte que talvez você tenha se confundido. Vem um grupo com:
+
+1. >;
+2. Um subgrupo, que está sendo capturado, com qualquer coisa (*.);
+3. Então temos </a>, fazendo backreference ao primeiro grupo capturado.
+4. Dessa forma, nosso exemplo pode ser:
+
+
+<a href="www.alura.com.br">Cursos online</a>
+
+Retorna:
+<a href="www.alura.com.br">Cursos online</a> ||| a ||| www.alura.com.br ||| Cursos online
