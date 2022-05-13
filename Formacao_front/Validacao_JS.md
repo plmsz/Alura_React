@@ -77,7 +77,7 @@ function maiorQue18(data) {
 
 ```js
 export function valida(input) {
-  const tipoDeInput = input.dataSet.tipo;
+  const tipoDeInput = input.dataset.tipo;
 
   if (validadores[tipoDeInput]) {
     validadores[tipoDeInput](input);
