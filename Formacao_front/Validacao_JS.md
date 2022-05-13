@@ -29,35 +29,35 @@ Então depois de todos esses conjuntos de regras fora de parêntesis, nós temos
 No JavaScript, também é possível tratar erros de validação utilizando a propriedade validity do input, é preciso definir uma mensagem vazia se não há erros ou form não será submetido.
 
 ```js
-input.setCustomValidity('Mensagem customizada de erro');
+input.setCustomValidity("Mensagem customizada de erro");
 ```
 
 ```js
-const dataNascimento = document.querySelector('#nascimento');
+const dataNascimento = document.querySelector("#nascimento");
 
-dataNascimento.addEventListener('blur', (evento) => {
-  validaDataNascimento(evento.target);
+dataNascimento.addEventListener("blur", (evento) => {
+	validaDataNascimento(evento.target);
 });
 
 function validaDataNascimento(input) {
-  const dataRecebida = new Date(input.value);
-  let mensagem = '';
+	const dataRecebida = new Date(input.value);
+	let mensagem = "";
 
-  if (!maiorQue18(dataRecebida)) {
-    mensagem = 'Você deve ser maior que 18 anos para se cadastrar.';
-  }
-  console.log(mensagem);
-  input.setCustomValidity(mensagem);
+	if (!maiorQue18(dataRecebida)) {
+		mensagem = "Você deve ser maior que 18 anos para se cadastrar.";
+	}
+	console.log(mensagem);
+	input.setCustomValidity(mensagem);
 }
 
 function maiorQue18(data) {
-  const dataAtual = new Date();
-  const dataMais18 = new Date(
-    data.getUTCFullYear() + 18,
-    data.getUTCMonth(),
-    data.getUTCDate()
-  );
-  return dataMais18 <= dataAtual;
+	const dataAtual = new Date();
+	const dataMais18 = new Date(
+		data.getUTCFullYear() + 18,
+		data.getUTCMonth(),
+		data.getUTCDate()
+	);
+	return dataMais18 <= dataAtual;
 }
 ```
 
@@ -65,38 +65,51 @@ function maiorQue18(data) {
 
 ```html
 <input
-  name="nascimento"
-  id="nascimento"
-  class="input"
-  type="date"
-  placeholder="Data de nascimento"
-  data-tipo="dataNascimento"
-  required
+	name="nascimento"
+	id="nascimento"
+	class="input"
+	type="date"
+	placeholder="Data de nascimento"
+	data-tipo="dataNascimento"
+	required
 />
 ```
 
 ```js
 export function valida(input) {
-  const tipoDeInput = input.dataset.tipo;
+	const tipoDeInput = input.dataset.tipo;
 
-  if (validadores[tipoDeInput]) {
-    validadores[tipoDeInput](input);
-  }
+	if (validadores[tipoDeInput]) {
+		validadores[tipoDeInput](input);
+	}
 }
 ```
 
 ```js
 const validadores = {
-  dataNascimento: (input) => validaDataNascimento(input),
+	dataNascimento: (input) => validaDataNascimento(input),
 };
 
-import { valida } from './validacao';
+import { valida } from "./validacao";
 
-const inputs = document.querySelectorAll('input');
+const inputs = document.querySelectorAll("input");
 
 inputs.forEach((input) => {
-  input.addEventListener('blur', (evento) => {
-    valida(evento.target);
-  });
+	input.addEventListener("blur", (evento) => {
+		valida(evento.target);
+	});
 });
+```
+
+# Selecionar elemento pai
+
+```js
+if (input.validity.valid) {
+	input.parentElement.classList.remove("input-container--invalido");
+	input.parentElement.querySelector(".input-mensagem-erro").innerHTML = "";
+} else {
+	input.parentElement.classList.add("input-container--invalido");
+	input.parentElement.querySelector(".input-mensagem-erro").innerHTML =
+		mostraMensagemDeErro(tipoDeInput, input);
+}
 ```
