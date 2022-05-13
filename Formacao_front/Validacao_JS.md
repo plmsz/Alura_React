@@ -113,3 +113,9 @@ if (input.validity.valid) {
 		mostraMensagemDeErro(tipoDeInput, input);
 }
 ```
+
+# Substituir o valor do input
+
+```js
+	const cpfFormatado = input.value.replace(/\D/g, ""); //não-digito
+```
