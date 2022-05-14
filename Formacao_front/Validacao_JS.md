@@ -24,6 +24,14 @@ E agora que caracteres são esses, dentro de colchetes, nós não colocamos inte
 
 Então depois de todos esses conjuntos de regras fora de parêntesis, nós temos um “.{6,12}”. Isso quer dizer que nós queremos que nosso campo tenha entre 6 a 12 caracteres.
 
+# Title
+
+Adiciona uma tooltip
+
+```js
+<input name="senha" id="senha" class="input" type="password" placeholder="Senha" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[!@#$%^&*]).{6,12}$" title="A senha deve conter entre 6 a 12 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos." data-tipo="senha">
+```
+
 # setCustomValidity()
 
 No JavaScript, também é possível tratar erros de validação utilizando a propriedade validity do input, é preciso definir uma mensagem vazia se não há erros ou form não será submetido.
@@ -156,3 +164,19 @@ No caso do somatório, é: x<=1
 Ou seja, ela vai ficar chamando ela mesma, e de novo, e de novo, e de novo...se você não der um stop nisso, vai ficar se invocando infinitamente.
 
 No caso, quando atinge: S(1), ela retorna 1 e vai parar de se invocar!
+
+# Máscara de cep
+
+ <script src="https://github.com/codermarcos/simple-mask-money/releases/download/v3.0.0/simple-mask-money.js"></script>
+
+```js
+const args = {
+	prefix: "R$",
+	fixed: true,
+	fractionDigits: 2,
+	decimalSeparator: ",",
+	thousandsSeparator: ".",
+	cursor: "end",
+};
+SimpleMaskMoney.setMask(input, args);
+```
