@@ -117,5 +117,42 @@ if (input.validity.valid) {
 # Substituir o valor do input
 
 ```js
-	const cpfFormatado = input.value.replace(/\D/g, ""); //não-digito
+const cpfFormatado = input.value.replace(/\D/g, ""); //não-digito
 ```
+
+# Função recursiva
+
+- é uma função que chama a si mesma até encontrar uma instrução de parar. Essa técnica é chamada de recursão.
+
+Vamos criar uma função que calcula o somatório de qualquer número n.
+Dizemos que o somatório de n é S(n) e se calcula assim: 1 + 2 + 3 + ... + (n-1) + n
+
+Por exemplo:
+S(5) = 5 + 4 + 3 + 2 + 1
+S(6) = 6 + 5 + 4 + 3 + 2 + 1
+...
+
+Mas note uma coisa interessante aí:
+S(6) = 6 + S(5)
+S(5) = 5 + S(4)
+...
+
+Generalizando:
+S(n) = n + S(n-1)
+
+```js
+function somatorio(x) {
+	if (x <= 1) {
+		return 1;
+	} else {
+		return x + somatorio(x - 1);
+	}
+}
+```
+
+Note uma coisa importante em funções recursivas: elas tem que ter um ponto de parada.
+No caso do somatório, é: x<=1
+
+Ou seja, ela vai ficar chamando ela mesma, e de novo, e de novo, e de novo...se você não der um stop nisso, vai ficar se invocando infinitamente.
+
+No caso, quando atinge: S(1), ela retorna 1 e vai parar de se invocar!
