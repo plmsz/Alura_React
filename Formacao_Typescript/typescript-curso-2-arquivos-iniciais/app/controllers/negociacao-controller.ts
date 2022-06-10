@@ -16,7 +16,6 @@ export class NegociacaoController {
     this.inputQuantidade = document.querySelector('#quantidade');
     this.inputValor = document.querySelector('#valor');
     this.negociacoesView.update(this.negociacoes);
-    this.mensagemView.update('Negociação adiciona com sucesso!');
   }
 
   adiciona(): void {
@@ -24,6 +23,7 @@ export class NegociacaoController {
     // negociacao.data.setDate(12);
     this.negociacoes.adiciona(negociacao);
     this.negociacoesView.update(this.negociacoes);
+    this.mensagemView.update('Negociação adiciona com sucesso!');
     this.limparFormulario();
   }
 
