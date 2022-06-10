@@ -135,19 +135,20 @@ export class NegociacoesView extends View<Negociacoes> {
     return `
         <table class="table table-hover table bordered">
         [...]
-`
+`;
   }
 }
 ```
+
 # Classes abstrata
 
-  - uma classe abstrata, você não pode criar uma instância diretamente dela. 
-  - você só pode se o filho herda essa classe e você cria uma instância do filho.
-  - ela pode ter nenhum, ter zero ou mais métodos abstratos. 
-    - um método abstrato aquele que a classe pai não sabe como vai ser implementado. Vai ser responsabilidade da classe filha. 
+- uma classe abstrata, você não pode criar uma instância diretamente dela.
+- você só pode se o filho herda essa classe e você cria uma instância do filho.
+- ela pode ter nenhum, ter zero ou mais métodos abstratos.
+  - um método abstrato aquele que a classe pai não sabe como vai ser implementado. Vai ser responsabilidade da classe filha.
 
 ```ts
-    export abstract class View<T> {
+export abstract class View<T> {
   protected elemento: HTMLElement;
 
   constructor(seletor: string) {
@@ -162,9 +163,12 @@ export class NegociacoesView extends View<Negociacoes> {
   }
 }
 ```
+
 # Visbilidade
- na classe filha, quando herdamos e sobrescrevemos um método, ampliamos a visibilidade do metódo
- um elemento que é protected, eu posso tornar public; ou um que é protected, eu posso continuar a ser protected colocando protected 
+
+na classe filha, quando herdamos e sobrescrevemos um método, ampliamos a visibilidade do metódo
+um elemento que é protected, eu posso tornar public; ou um que é protected, eu posso continuar a ser protected colocando protected
+
 ```ts
 export abstract class View<T> {
   protected elemento: HTMLElement;
@@ -179,5 +183,19 @@ export abstract class View<T> {
     const template = this.template(model);
     this.elemento.innerHTML = template;
   }
+}
+```
+
+# Enums
+
+```ts
+export enum DiasDaSemana {
+  DOMINGO = 0,
+  SEGUNDA = 1,
+  TERÇA = 2,
+  QUARTA = 3,
+  QUINTA = 4,
+  SEXTA = 5,
+  SABADO = 6,
 }
 ```
