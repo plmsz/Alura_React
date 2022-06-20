@@ -2,32 +2,33 @@ import { domInjector } from '../decorators/dom-injector.js';
 import { inspect } from '../decorators/inspect.js';
 import { logarTempoDeExecucao } from '../decorators/logar-tempo-execucao.js';
 import { DiasDaSemana } from '../enums/dias-da-semana.js';
+
 import { Negociacao } from '../models/negociacao.js';
+import { NegociacoesService } from '../services/negociacoes-services.js';
 import { Negociacoes } from '../models/negociacoes.js';
 import { MensagemView } from '../views/mensagem-view.js';
 import { NegociacoesView } from '../views/negociacoes-view.js';
+import { imprimir } from '../utils/imprimir.js';
 
 export class NegociacaoController {
-  @domInjector("#data")
+  @domInjector('#data')
   private inputData: HTMLInputElement;
-  @domInjector("#quantidade")
+  @domInjector('#quantidade')
   private inputQuantidade: HTMLInputElement;
-  @domInjector("#valor")
+  @domInjector('#valor')
   private inputValor: HTMLInputElement;
   private negociacoes = new Negociacoes();
   private negociacoesView = new NegociacoesView('#negociacoesView');
   private mensagemView = new MensagemView('#mensagemView');
+  private negociacoesService = new NegociacoesService();
 
   constructor() {
     this.negociacoesView.update(this.negociacoes);
   }
-  
+
   @inspect()
   @logarTempoDeExecucao(true)
   public adiciona(): void {
-    /*
-           Este comentário será apagado
-        */
     const negociacao = Negociacao.criaDe(
       this.inputData.value,
       this.inputQuantidade.value,
@@ -40,8 +41,28 @@ export class NegociacaoController {
     }
 
     this.negociacoes.adiciona(negociacao);
+    imprimir(negociacao, this.negociacoes);
+
     this.limparFormulario();
     this.atualizaView();
+  }
+
+  importaDados(): void {
+    this.negociacoesService
+      .obterNegociacoesDoDia()
+      .then((negociacoesDeHoje) => {
+        return negociacoesDeHoje.filter((negociacoesDeHoje) => {
+          return !this.negociacoes
+            .lista()
+            .some((negociacao) => negociacao.ehIgual(negociacoesDeHoje));
+        });
+      })
+      .then((negociacoesDeHoje) => {
+        for (const negociacao of negociacoesDeHoje) {
+          this.negociacoes.adiciona(negociacao);
+        }
+        this.negociacoesView.update(this.negociacoes);
+      });
   }
 
   private ehDiaUtil(data: Date) {
