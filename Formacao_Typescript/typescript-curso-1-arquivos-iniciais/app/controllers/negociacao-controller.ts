@@ -1,9 +1,11 @@
 import { Negocicacao } from "../models/negociacao.js";
+import { Negociacoes } from '../models/negociacoes.js';
 
 export class NegociacaoController {
 	private inputData: HTMLInputElement;
 	private inputQuantidade: HTMLInputElement;
 	private inputValor: HTMLInputElement;
+	private negociacoes = new Negociacoes();
 
 	constructor() {
 		this.inputData = document.querySelector("#data");
@@ -13,7 +15,9 @@ export class NegociacaoController {
 
 	adciona(): void {
 		const negociacao = this.criaNegociacao();
-		console.log(negociacao);
+		// negociacao.data.setDate(23) //não irá funcionar pois a data é apenas uma cópia
+		this.negociacoes.adciona(negociacao)
+		console.log(this.negociacoes.lista())
 		this.limparFormulario();
 	}
 
