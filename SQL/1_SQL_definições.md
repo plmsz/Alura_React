@@ -69,7 +69,7 @@ Os principais comandos DCL são Grant e Revoke.
 Caminho padrão:
 C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA 
 
-[Criando um banco de dados em um local específico](./01_create.sql) 
+[Criando um banco de dados em um local específico](./01_create_database.sql) 
 
 ## Usando o assistente para determinar o comando SQL
 
@@ -77,7 +77,7 @@ Clicar na árvore com o botão direito do mouse de novo e vou criar um banco de 
 
 Só que ao invés de eu clicar no botão “OK”, eu vou clicar em “Script”. Quando eu abro essa seta, eu vou selecionar “Ação do Script para a Nova Janela de Consulta”. Ao fazer isso, note que ele escreveu alguma coisa, que se eu fechar, olha o que ele escreveu.
 
-# [Excluindo um banco de dados](./02_drop.sql) 
+# [Excluindo um banco de dados](./02_drop-database.sql) 
 
 ## Apagando o banco com o assitente 
 1) No SSMS podemos apagar o banco de dados. Ao clicar com o botão direito do mouse e escolher Excluir abre a janela para confirmar a ação.
