@@ -43,3 +43,32 @@ WHERE [CODIGO DO PRODUTO] = '1078680'
 DELETE FROM [TABELA DE PRODUTOS]
 WHERE [CODIGO DO  PRODUTO] = '1078680'
 ~~~
+
+# Ordem dos campos
+- É possível não citar as colunas. Porém pode ocasionar erro, caso insira um campo em uma ordem diferente com tipo de dados diferentes
+
+~~~sql
+INSERT INTO [TABELA DE PRODUTOS]
+    VALUES
+    ('1040107','Light - 350 ml - Melância','Lata','350 ml','Melância',4.56)
+~~~
+
+-É possível mudar a orde dos campos, se citar as colunas
+
+~~~sql
+INSERT INTO [TABELA DE PRODUTOS]
+    (
+    [CODIGO PRODUTO],
+    [NOME DO PRODUTO],
+    EMBALAGEM,
+    TAMANHO,
+    [PRECO DE LISTA]
+    SABOR,
+    )
+    VALUES
+    ('1040107','Light - 350 ml - Melância','Lata','350 ml',4.56, 'Melância')
+~~~
+
+O campo de data deve ser sempre representado como yyyy-mm-dd (Ano, mês e dia separados por - e o mês e dia representados com dois dígitos).
+
+Já o campo lógico é representado pelo tipo bit e seus valores são 1 para verdadeiro e 0 para falso.

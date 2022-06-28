@@ -51,3 +51,34 @@ DELETE FROM [TABELA DE PRODUTOS]
 WHERE [CODIGO PRODUTO] = '1078680'
 
 DELETE FROM [TABELA DE VENDEDORES] WHERE [MATRICULA] = '00235';
+
+INSERT INTO [dbo].[TABELA DE CLIENTES]
+           ([CPF]
+           ,[NOME]
+           ,[ENDERECO1]
+           ,[ENDERECO2]
+           ,[BAIRRO]
+           ,[CIDADE]
+           ,[ESTADO]
+           ,[CEP]
+           ,[DATA DE NASCIMENTO]
+           ,[IDADE]
+           ,[SEXO]
+           ,[LIMITE DE CREDITO]
+           ,[VOLUME DE COMPRA]
+           ,[PRIMEIRA COMPRA])
+     VALUES
+           ('12345678901'
+           ,'Joao Souza'
+           ,'Travessa Silva'
+           ,'Número 321'
+           ,'Rio Negro'
+           ,'Santa Lúcia'
+           ,'AL'
+           ,'12345678'
+           ,'1998-03-21'
+           ,24
+           ,'F'
+           ,20000.00
+           ,300.22
+           ,1)
