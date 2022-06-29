@@ -28,12 +28,12 @@
 }
 
 .secaoDestaques-destaque-titulo {
-  margin-top: 1em;
   font-weight: bold;
   font-size: 1.2em
 }
 
 .secaoDestaques-destaque-img {
+  margin-bottom: 1em;
   width: 100%;
   display: block;
 }
