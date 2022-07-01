@@ -152,9 +152,10 @@ public adiciona(): void {
 // ...
 }
 ```
+
 # escapar e constructor.name
 
-~~~ts
+```ts
 export function escapar(
   target: any,
   propertyKey: string,
@@ -173,6 +174,204 @@ export function escapar(
   };
   return descriptor;
 }
+```
+
+## Object.defineProperty, closure e elemento em cache
+
+```ts
+export function domInjector(seletor: string) {
+  return function (target: any, propertyKey: string) {
+    console.log(
+      `modificando prototype: ${target.constructor.name} e adicionando getter a propriedade: ${propertyKey}`
+    );
+    let elemento: HTMLElement;
+
+    const getter = function () {
+      if (!elemento) {
+        elemento = <HTMLElement>document.querySelector(seletor);
+        console.log(
+          `buscando elemento do do seletor ${seletor} para injetar em ${propertyKey}`
+        );
+      }
+      return elemento;
+    };
+
+    Object.defineProperty(target, propertyKey, { get: getter });
+  };
+}
+```
+
+# JSON.stringify
+
+```ts
+// JSON.stringify(value, replacer, space)
+
+JSON.stringify({ uno: 1, dos: 2 }, null, '\t');
+// returns the string:
+// '{
+//     "uno": 1,
+//     "dos": 2
+// }'
+
+console.log(JSON.stringify(this.negociacoes, null, 2));
+[
+  {
+    _data: '2022-06-20T17:32:24.568Z',
+    quantidade: 2,
+    valor: 200.5,
+  },
+];
+```
+
+# Poliformismo
+
+O polimorfismo é a capacidade que um objeto tem de ser referenciado de múltiplas formas.
+
+- Então estou garantindo através do polimorfismo que eu posso ter trinta mil objetos no meu sistema, se todos herdarem, estenderem imprimível, implementarem o método abstrato imprimível, o meu método imprimir vai aceitar e vai rodar.
+
+```ts
+// Uma classe abstrata significa que eu não posso fazer new ..., porque eu não posso criar instâncias dessa classe.
+// Toda classe abstrata pode te dar um método que você é obrigado a implementar, que se você não implementar, o teu código não vai funcionar.
+export abstract class Imprimivel {
+  public abstract paraTexto(): string;
+}
+```
+
+```ts
+import { Imprimivel } from '../utils/imprimivel.js';
+
+export class Negociacao extends Imprimivel {
+  constructor(
+    private _data: Date,
+    public readonly quantidade: number,
+    public readonly valor: number
+  ) {
+    super(); //Então como eu herdei a minha filha está sobrescrevendo o construtor, eu tenho que garantir a chamada do construtor pai chamando super();
+  }
+
+  //...
+  public paraTexto(): string {
+    return `
+        Data: ${this.data},
+        Quantidade: ${this.quantidade},
+        Valor: ${this.valor}`;
+  }
+}
+```
+
+```ts
+import { Imprimivel } from '../utils/imprimivel.js';
+import { Negociacao } from './negociacao.js';
+
+export class Negociacoes extends Imprimivel {
+  private negociacoes: Negociacao[] = [];
+
+  public adiciona(negociacao: Negociacao) {
+    this.negociacoes.push(negociacao);
+  }
+
+  public lista(): readonly Negociacao[] {
+    return this.negociacoes;
+  }
+
+  public paraTexto(): string {
+    return JSON.stringify(this.negociacoes, null, 2);
+  }
+}
+```
+
+# Implements interface
+
+- em herança em Java Script, você não pode ter herança múltipla
+- por padrão toda interface é pública e todo método de uma interface é abstrato, com uma interface uma classe pode implementar quantas interfaces quisermos, não há limite.
+
+```ts
+export interface Imprimivel {
+  paraTexto(): string;
+}
+```
+
+```ts
+export class Negociacao implements Imprimivel {
+  constructor(
+    private _data: Date,
+    public readonly quantidade: number,
+    public readonly valor: number
+  ) {}
+
+  // ...
+  public paraTexto(): string {
+    return `
+        Data: ${this.data},
+        Quantidade: ${this.quantidade},
+        Valor: ${this.valor}`;
+  }
+}
+```
+
+# Interface e Generics
+
+```ts
+export interface Comparavel<T> {
+  ehIgual(objeto: T): boolean;
+}
+```
+
+```ts
+export class Negociacao implements Imprimivel, Comparavel<Negociacao> {
+  //  ...
+  public ehIgual(negociacao: Negociacao) {
+    return (
+      this.data.getDate() === negociacao.data.getDate() &&
+      this.data.getMonth() === negociacao.data.getMonth() &&
+      this.data.getFullYear() === negociacao.data.getFullYear()
+    );
+  }
+}
+```
+
+```ts
+export class Negociacoes implements Imprimivel, Comparavel<Negociacoes> {
+  // ...
+  ehIgual(negociacoes: Negociacoes): boolean {
+    return (
+      JSON.stringify(this.negociacoes) === JSON.stringify(negociacoes.lista())
+    );
+  }
+}
+```
+# Estendendo interface
+```ts
+import { Comparavel } from './comparavel.js';
+import { Imprimivel } from '../utils/imprimivel.js';
+
+export interface Modelo<T> extends Imprimivel, Comparavel<T> {
+
+}
+```
+```ts
+export class Negociacao implements Modelo<Negociacao> {
+  //  ...
+}
+```
+
+# Debugar
+~~~ts
+{
+  "compilerOptions": {
+    "outDir": "app/dist/js",
+    "target": "ES6",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "include": ["app/src/**/*"]
+}
 ~~~
 
-## Object.defineProperty
+Primeiro pré requisito é ter o sourceMap. Segundo é ter um ambiente na sua infraestrutura, seja PHP, Java etc., 
+que dê acesso para o Chrome onde estão os arquivos ts e na hora de você abrir o seu console.
+você vai dar “Ctrl + P” para abrir a tela de procura de qualquer classe.
