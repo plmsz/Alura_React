@@ -137,3 +137,4 @@ Alternativa https://github.com/GoogleChrome/inert-polyfill
 
 # Carrousel acessível
 - Lista deve ter titulo - arialabelbyid
+Um exemplo de caurosel direto da própria W3C.
