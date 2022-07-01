@@ -28,7 +28,6 @@ document.querySelector('.dialogNewsletter-fechar').addEventListener('click', fec
 dialogOverlay.addEventListener('click', fechandoDialog);
 
 document.addEventListener('keyup', function (event) {
-  console.log(event.key);
   if (event.key === 'Escape') {
     fechandoDialog();
   }

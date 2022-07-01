@@ -14,14 +14,14 @@
 ```
 
 # Modal acessível
-
-Biblioteca: https://sweetalert2.github.io/
+Biblioteca modal pronto: https://sweetalert2.github.io/
 
 - display none se não tiver javascript
 - role dialog
 - aria-labelledby para o titulo
 - foco
 - aria-label em botão sem descrição
+- clicar em esc ou na overlay fecha a modal
 
 ```css
 .secaoDestaques-form-botao {
@@ -125,10 +125,15 @@ document.addEventListener('keyup', function (evento) {
 });
 ```
 
-# Instale o inert
+## Instale o inert
 
 1.  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Map,Set,Element.prototype.matches,Node.prototype.contains"></script>
     <script src="https://unpkg.com/wicg-inert"></script>
 
 2.  npm install inert
      <script src="node_modules/wicg-inert/dist/inert.min.js"></script>
+
+Alternativa https://github.com/GoogleChrome/inert-polyfill
+
+# Carrousel acessível
+- Lista deve ter titulo - arialabelbyid

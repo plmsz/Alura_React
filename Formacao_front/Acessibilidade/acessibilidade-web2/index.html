@@ -254,9 +254,9 @@
 
         <section class="secaoBlog container">
           <h2 class="secaoBlog-titulo tituloPadrao">BLOG</h2>
-
-          <ul class="listaDeArtigos">
-            <li id="new0" class="listaDeArtigos-item">
+          <h3 id="tituloBlo" class="escondeVisualmente">Lista de artigos</h3>
+          <ol class="listaDeArtigos" aria-labelledby="tituloBlog">
+            <li id="new0" class="listaDeArtigos-item" data-noticia="0">
               <article class="listaDeArtigos-artigo">
                 <img
                   src="img/10-aplicativos-mais-baixados.png"
@@ -278,7 +278,7 @@
               </article>
             </li>
 
-            <li id="new1" class="listaDeArtigos-item">
+            <li id="new1" class="listaDeArtigos-item" data-noticia="1">
               <article class="listaDeArtigos-artigo">
                 <img
                   src="img/ux-usabilidade.jpg"
@@ -300,7 +300,7 @@
               </article>
             </li>
 
-            <li id="new2" class="listaDeArtigos-item">
+            <li id="new2" class="listaDeArtigos-item" data-noticia="2">
               <article class="listaDeArtigos-artigo">
                 <img
                   src="img/dicas-acessibilidade.jpg"
@@ -321,7 +321,7 @@
                 </p>
               </article>
             </li>
-          </ul>
+          </ol>
 
           <nav>
             <ul class="listaDeArtigos-slider">
@@ -658,7 +658,13 @@
           <button class="dialogNewsletter-btn" type="submit">
             Assinar newsletter
           </button>
-          <button class="dialogNewsletter-fechar" type="button" aria-label="Fechar janela modal">X</button>
+          <button
+            class="dialogNewsletter-fechar"
+            type="button"
+            aria-label="Fechar janela modal"
+          >
+            X
+          </button>
         </form>
       </div>
       <div class="dialogNewsletter-overlay"></div>
