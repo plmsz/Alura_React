@@ -1,0 +1,33 @@
+@import '../abstract/variaveis';
+
+#call-to-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    img {
+        align-self: center;
+    }
+    h3 {
+        margin: 2rem;
+        text-align: center;
+        font-size: $tamanho-do-texto/1.2;
+    }
+    h4{
+        font-size: $tamanho-do-texto/2.5;
+        margin: 0.8rem;
+        color: $cor-secundaria;
+        text-transform: uppercase;
+        font-weight: $tamanho-do-texto 300;
+        text-align: center;
+    }
+    p{
+        font-size: $tamanho-do-texto/2.5;
+        text-align: left;
+        line-height: 1.5; 
+        a{
+            color: $cor-secundaria;
+            text-decoration: none;
+        } 
+    }
+}
