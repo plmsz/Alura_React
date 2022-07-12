@@ -2,7 +2,7 @@ var new0 = document.querySelector('#new0');
 var new1 = document.querySelector('#new1');
 var new2 = document.querySelector('#new2');
 var noticias = document.querySelectorAll('.listaDeArtigos-item')
-console.log(noticias)
+
 new0.style.display = 'block';
 
 var btns = document.querySelectorAll('.listaDeArtigos-slider-item');
