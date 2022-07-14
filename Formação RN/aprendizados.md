@@ -274,10 +274,10 @@ export const estilos = StyleSheet.create({
 ```jsx
 export function App() {
   return (
-      <Cesta {...mock} />
+    <Cesta {...mock} />
     //    Igual a linha abaixo:
     //  <Cesta topo={mock.topo} detalhes={mock.detalhes} />
-  )
+  );
 }
 ```
 
@@ -291,6 +291,7 @@ export default const cesta = {
 };
 
 ```
+
 ```jsx
 export default function Topo({ titulo }) {
   return (
@@ -300,6 +301,7 @@ export default function Topo({ titulo }) {
   );
 }
 ```
+
 # Tela de carregamento
 
 expo install expo-splash-screen
@@ -308,7 +310,11 @@ https://docs.expo.dev/versions/latest/sdk/splash-screen/
 ```jsx
 import React, { useEffect, useCallback } from 'react';
 import { StatusBar, SafeAreaView } from 'react-native';
-import {  useFonts,  Montserrat_400Regular,  Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import {
+  useFonts,
+  Montserrat_400Regular,
+  Montserrat_700Bold,
+} from '@expo-google-fonts/montserrat';
 import Cesta from './src/telas/Cesta';
 import mock from './src/mocks/cesta';
 import * as SplashScreen from 'expo-splash-screen';
@@ -347,5 +353,152 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
 ```
+
+# Botão
+
+React Native renderiza elementos de interface do usuário específicos da plataforma e, como resultado, há opções limitadas de estilo e personalização (os documentos oficiais react native admitem o mesmo). <Button title='Botão'/>
+
+```jsx
+<TouchableOpacity style={estilos.botao}>
+  <Texto style={estilos.textoBotao}>{botao}</Texto>
+</TouchableOpacity>
+```
+
+## React Native Touchable
+
+Touchable é um componente para superar a limitação ao usar estilos no componente Button.
+
+Ou seja, no quesito estilos, oferece mais possibilidades que o Componente Button.
+
+Para ser mais preciso é um wrapper para fazer com que uma View responda apropriadamente a toques, fazendo funcionar da mesma maneira que um botão.
+
+1. TouchableNativeFeedback
+   TouchableNativeFeedback é um wrapper para fazer com que uma View responda apropriadamente a toques, sendo que está disponível somente para Android.
+
+Este componente usa o estado nativo do Android para exibir o feedback do toque.
+
+Para Importar TouchableNativeFeedback no Código
+import { TouchableNativeFeedback } from 'react-native'
+Para Renderizar na Tela
+
+```jsx
+<TouchableNativeFeedback>
+  <View>
+    <Text>Label</Text>
+  </View>
+</TouchableNativeFeedback>
+```
+
+2. TouchableHighlight
+   TouchableHighlight é um wrapper para fazer com que uma View responda apropriadamente a toques.
+
+Ao ser clicado, a opacidade da View é diminuída, ou seja, a cor da View é escurecida.
+
+Para Importar TouchableHighlight no Código
+import { TouchableHighlight } from 'react-native'
+Para Renderizar na Tela
+
+```jsx
+<TouchableHighlight>
+  <Text>Label</Text>
+</TouchableHighlight>
+```
+
+3. TouchableOpacity
+   TouchableOpacity é um wrapper para fazer com que uma View responda apropriadamente a toques.
+
+Ao ser clicado, a opacidade da View é diminuída, mas de maneira gradual, diminuindo assim a sua intensidade.
+
+Para Importar TouchableOpacity no Código
+import { TouchableOpacity } from 'react-native'
+Para Renderizar na Tela
+
+```jsx
+<TouchableOpacity>
+  <Text>Label</Text>
+</TouchableOpacity>
+```
+
+4. TouchableWithoutFeedback
+   TouchableWithoutFeedback não apresenta nenhum feedback visual, portanto não use a menos que tenha uma boa razão.
+
+Já que todos os elementos que respondem ao toque devem receber um feedback visual quando tocados.
+
+Para Importar TouchableWithoutFeedback no Código
+import { TouchableWithoutFeedback } from 'react-native'
+Para Renderizar na Tela
+
+```jsx
+<TouchableWithoutFeedback>
+  <View>
+    <Text>Label</Text>
+  </View>
+</TouchableWithoutFeedback>
+```
+
+# Scroll
+
+```jsx
+import { ScrollView, StyleSheet, View } from 'react-native';
+import Detalhes from './components/Detalhes';
+
+export default function Cesta({ topo, detalhes, itens }) {
+  return (
+    <ScrollView>
+      <View style={estilos.cesta}>
+        <Detalhes {...detalhes} />
+      </View>
+    </ScrollView>
+  );
+}
+
+export const estilos = StyleSheet.create({
+  cesta: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+});
+```
+# Listas com map
+
+import tomate from '../../assets/frutas/Tomate.png';
+import brocolis from '../../assets/frutas/Brócolis.png';
+
+const cesta = {
+  itens: {
+    titulo: "Itens da cesta",
+    lista: [
+      {
+        nome: "Tomate",
+        imagem: tomate,
+      },
+      {
+        nome: "Brócolis",
+        imagem: brocolis,
+      },
+    ]
+  }
+};
+
+export default cesta;
+
+import React from 'react';
+import { View, Image, StyleSheet } from 'react-native';
+import Texto from '../../../components/Texto';
+
+export function Itens({ titulo, lista }) {
+  return (
+    <>
+      <Texto style={estilos.titulo}>{titulo}</Texto>
+      {lista.map(({ nome, imagem }) => {
+        return (
+          <View key={nome} style={estilos.item}>
+            <Image style={estilos.imagem} source={imagem} />
+            <Texto style={estilos.nome}>{nome}</Texto>
+          </View>
+        );
+      })}
+    </>
+  );
+}
