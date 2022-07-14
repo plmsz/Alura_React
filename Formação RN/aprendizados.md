@@ -460,29 +460,33 @@ export const estilos = StyleSheet.create({
   },
 });
 ```
+
 # Listas com map
 
+```jsx
 import tomate from '../../assets/frutas/Tomate.png';
 import brocolis from '../../assets/frutas/Brócolis.png';
 
 const cesta = {
   itens: {
-    titulo: "Itens da cesta",
+    titulo: 'Itens da cesta',
     lista: [
       {
-        nome: "Tomate",
+        nome: 'Tomate',
         imagem: tomate,
       },
       {
-        nome: "Brócolis",
+        nome: 'Brócolis',
         imagem: brocolis,
       },
-    ]
-  }
+    ],
+  },
 };
 
 export default cesta;
+```
 
+```jsx
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Texto from '../../../components/Texto';
@@ -502,3 +506,91 @@ export function Itens({ titulo, lista }) {
     </>
   );
 }
+```
+
+# Listas com Flatlist
+
+Precisamos refatorar nossa tela para que o componente principal seja a FlatList, adicionando como Header e Footer da FlatList, o restante dos componentes e definindo a view superior para ocupar 100% da tela. Dessa forma, a FlatList carrega apenas os componentes que estão visíveis na tela.
+Lembrando que adicionamos aqui no "App.js" O style={{flex:1}para que a nossa SafeAreaView, a nossa View principal ocupe 100% da tela, não 200%, para que ela não continue invisível e para que a nossa FlatList fique como componente principal da nossa aplicação e ela renderize somente os itens que estão visíveis
+
+```jsx
+import React from 'react';
+import { View, Image, StyleSheet } from 'react-native';
+import Texto from '../../../components/Texto';
+
+export function Item({ item: { nome, imagem } }) {
+  return (
+    <View style={estilos.item}>
+      <Image style={estilos.imagem} source={imagem} />
+      <Texto style={estilos.nome}>{nome}</Texto>
+    </View>
+  );
+}
+
+export const estilos = StyleSheet.create({
+  item: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ECECEC',
+    paddingVertical: 16,
+    marginHorizontal: 16,
+    alignItems: 'center',
+  },
+  imagem: {
+    width: 46,
+    height: 46,
+  },
+  nome: {
+    fontSize: 16,
+    lineHeight: 26,
+    marginLeft: 11,
+    color: '#464646',
+  },
+});
+```
+
+```jsx
+import { StyleSheet, View, FlatList } from 'react-native';
+import Detalhes from './components/Detalhes';
+import { Item } from './components/Item';
+import Topo from './components/Topo';
+import Texto from '../../components/Texto';
+
+export default function Cesta({ topo, detalhes, itens }) {
+  return (
+    <>
+      <FlatList
+        data={itens.lista}
+        renderItem={Item}
+        keyExtractor={({ nome }) => nome}
+        ListHeaderComponent={() => {
+          return (
+            <>
+              <Topo {...topo} />
+              <View style={estilos.cesta}>
+                <Detalhes {...detalhes} />
+                <Texto style={estilos.titulo}>{itens.titulo}</Texto>
+              </View>
+            </>
+          );
+        }}
+      />
+    </>
+  );
+}
+
+export const estilos = StyleSheet.create({
+  cesta: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  titulo: {
+    color: '#464646',
+    fontWeight: 'bold',
+    marginTop: 32,
+    marginBottom: 8,
+    fontSize: 20,
+    lineHeight: 32,
+  },
+});
+```

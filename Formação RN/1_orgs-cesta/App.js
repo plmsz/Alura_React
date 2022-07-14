@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { StatusBar, SafeAreaView } from 'react-native';
-import {  useFonts,  Montserrat_400Regular,  Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Cesta from './src/telas/Cesta';
 import mock from './src/mocks/cesta';
 import * as SplashScreen from 'expo-splash-screen';
@@ -33,9 +33,9 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView onLayout={onLayoutRootView}>
+    <SafeAreaView style={{flex: 1}} onLayout={onLayoutRootView}>
       <StatusBar />
       <Cesta {...mock} />
-    </SafeAreaView>
+    </SafeAreaView >
   );
 }
