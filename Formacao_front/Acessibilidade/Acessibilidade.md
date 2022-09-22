@@ -138,3 +138,31 @@ Alternativa https://github.com/GoogleChrome/inert-polyfill
 # Carrousel acessível
 - Lista deve ter titulo - arialabelbyid
 Um exemplo de caurosel direto da própria W3C.
+
+
+# Personalizando validações do html
+~~~js
+document.querySelector('#cep').oninvalid = function() {
+    this.setCustomValidity('')
+
+    if(!this.validity.valid){
+        this.setCustomValidity('Ops! Tem algo errado nesse campo.')
+        this.parentElement.classList.add('contatoCampo--erro')
+    }
+}
+~~~
+
+# Checar o email
+copia o [mailchecker.js](./acessibilidade-web2/js/mailcheck.js)
+
+## Configura
+
+~~~html
+<!-- ... -->
+
+<!-- ... -->
+<script src="js/carousel.js"></script>
+    <script src="js/mailcheck.js"></script>
+    <script src="js/mailcheckconfig.js"></script>
+  </body>
+~~~
